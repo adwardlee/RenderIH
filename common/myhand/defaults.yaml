@@ -1,0 +1,59 @@
+SEED: 25
+MISC:
+  MANO_PATH: "misc/mano"
+  GRAPH_LEFT_DICT_PATH: "misc/graph_left.pkl"
+  GRAPH_RIGHT_DICT_PATH: "misc/graph_right.pkl"
+  DENSE_COLOR: "misc/v_color.pkl"
+  MANO_SEG_PATH: "misc/mano_seg.pkl"
+  UPSAMPLE_PATH: "misc/upsample.pkl"
+MODEL:
+  ENCODER_TYPE: "resnet50"
+  DECONV_DIMS: [256, 256, 256, 256]
+  IMG_DIMS: [256, 128, 64]
+  GCN_IN_DIM: [512, 256, 128]
+  GCN_OUT_DIM: [256, 128, 64]
+  ENCODER_PRETRAIN_PATH: "none"
+  freeze_upsample: true
+  graph_k: 2
+  graph_layer_num: 4
+MODEL_PARAM:
+  MODEL_PRETRAIN_PATH: "none"
+  OPTIM_PATH: "none"
+  LrSc_PATH: "none"
+DATASET:
+  INTERHAND_PATH: "none"
+DATA_AUGMENT:
+  THETA: 90
+  SCALE: 0.2
+  UV: 0.0
+TRAIN:
+  DIST_PORT: 12345
+  OPTIM: 'adam'
+  current_epoch: 0
+  lr_decay_step: 100
+  lr_decay_gamma: 0.1
+  warm_up: 0
+  EPOCHS: 200
+  BATCH_SIZE: 64
+  LR: 0.0001
+  dropout: 0.05
+LOSS_WEIGHT:
+  AUX:
+    DENSEPOSE: 30
+    MASK: 500
+    HMS: 100
+  DATA:
+    LABEL_3D: 100
+    LABEL_2D: 50
+  GRAPH:
+    NORM:
+      EDGE: 2000
+      NORMAL: 10
+      NORM_EPOCH: 50
+TB:
+  SHOW_GAP: 200
+  SAVE_DIR: "none"
+SAVE:
+  SAVE_GAP: 10
+  SAVE_DIR: "none"
+

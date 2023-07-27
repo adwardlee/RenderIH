@@ -1,6 +1,9 @@
 # RenderIH
 Official PyTorch implementation of "RenderIH: A large-scale synthetic dataset for 3D interacting hand pose estimation", ICCV 2023
 
+## Our dataset
+[RenderIH](./rendering_code): Download from Google Drive: [imgs](https://drive.google.com/file/d/1nl5VZvnKN3SIJnBOis4rfsuG_DT0smLl/view?usp=drive_link), [annotations](https://drive.google.com/file/d/1wOuZTgWODhyelLXJr7Kv9tuEiFxcWIif/view?usp=drive_link); or BaiduPan: [imgs](https://pan.baidu.com/s/1M0vxWRbBu1lH_fV9FPBHbg?pwd=mo5n) [annotations](https://pan.baidu.com/s/1XFIbU_QHT1Smi2WL_LmCJw?pwd=ajbf). Untar the compressed files, and run step7.
+
 ## Prequeries
 download and unzip [misc.tar].
 Register and download [MANO](https://mano.is.tue.mpg.de/)  data. Put `MANO_LEFT.pkl` and `MANO_RIGHT.pkl` in `misc/mano`
@@ -39,7 +42,7 @@ numpy,tqdm,yacs,tensorboardX,scipy,imageio,matplotlib,scikit-image,manopth,timm,
 
 
 ## DATASET
-1.INTERHAND2.6M: 1) Download [InterHand2.6M](https://mks0601.github.io/InterHand2.6M/) dataset and unzip it. (Noted: we used the v1.0_5fps version and H+M subset for training and evaluating)
+INTERHAND2.6M: 1) Download [InterHand2.6M](https://mks0601.github.io/InterHand2.6M/) dataset and unzip it. (Noted: we used the v1.0_5fps version and H+M subset for training and evaluating)
 
 Process the dataset by :
 
@@ -47,7 +50,6 @@ Process the dataset by :
 ```python utils/dataset_gen/interhand.py --data_path PATH_OF_INTERHAND2.6M --save_path ./interhand2.6m/ --gen_anno 0```
 Replace PATH_OF_INTERHAND2.6M with your own store path of InterHand2.6M dataset.
 
-2.[RenderIH](./rendering_code): Download from [imgs](https://drive.google.com/file/d/1nl5VZvnKN3SIJnBOis4rfsuG_DT0smLl/view?usp=drive_link), [annotations](https://drive.google.com/file/d/1wOuZTgWODhyelLXJr7Kv9tuEiFxcWIif/view?usp=drive_link). Untar the compressed files, and run step7.
 
 ## Training
 `python apps/train.py --gpu 0,1,2,3`
