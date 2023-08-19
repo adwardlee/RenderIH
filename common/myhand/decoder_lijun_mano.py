@@ -20,7 +20,6 @@ from dataset.dataset_utils import IMG_SIZE
 from common.utils.mano import MANO
 from common.utils.mano import Jr
 from common.utils.manolayer import rodrigues_batch
-from common.utils.loss_utils import DiceLoss, SDFLoss, TryLoss
 from common.utils.focal_loss import FocalLoss
 # from common.vis_utils import mano_two_hands_renderer
 
@@ -190,16 +189,12 @@ class decoder(nn.Module):
                 self.diceloss = DiceLoss()
             else:
                 self.diceloss = FocalLoss()
-        if cfg.sdf or self.cfg.data_type == 'interhand_sdf':
-            self.sdf = TryLoss()
-            self.sdf1 = SDFLoss(self.right_face, self.left_face)
-            self.sdf_thresh = cfg.sdf_thresh
         print('edge : ', self.cfg.edge, flush=True)
         print('normal : ', self.cfg.normal, flush=True)
         print('vert2d : ', self.cfg.vert2d, flush=True)
         print('decoder mano : ', self.mano, flush=True)
         print('renderer : ', cfg.render, flush=True)
-        print('sdf : ', cfg.sdf, flush=True)
+
 
     def get_upsample_weight(self):
         return self.unsample_layer.weight.data

@@ -129,18 +129,8 @@ def train_gcn(rank=0, world_size=1, cfg=None, dist_training=False, only_j3d=0):
 
     # load optimizer
     optim_params = list(filter(lambda p: p.requires_grad, network.parameters()))
-    if cfg.TRAIN.OPTIM == 'lion':
-        from gsam.lion import Lion
-        optimizer = Lion(
-            optim_params,
-            lr = cfg.TRAIN.LR,
-            use_triton = True # set this to True to use cuda kernel w/ Triton lang (Tillet et al)
-        )
-    elif cfg.TRAIN.OPTIM == 'adam':
+    if cfg.TRAIN.OPTIM == 'adam':
         optimizer = torch.optim.AdamW(optim_params, lr=cfg.TRAIN.LR, weight_decay=cfg.TRAIN.weight_decay)
-    elif cfg.TRAIN.OPTIM == 'adan':
-        from adan import Adan
-        optimizer = Adan(optim_params, lr=cfg.TRAIN.LR, weight_decay=cfg.TRAIN.weight_decay)
     elif cfg.TRAIN.OPTIM == 'rms':
         if dist_training:
             optimizer = ZeroRedundancyOptimizer(

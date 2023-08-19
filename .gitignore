@@ -5,11 +5,13 @@ _ext
 *.so
 build/
 dist/
+rebut/
 *.egg-info/
 
 # pytorch/python formats
 *.pth
 *.pkl
+*.npy
 
 # ipython/jupyter notebooks
 *.ipynb

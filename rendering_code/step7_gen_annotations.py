@@ -298,10 +298,10 @@ class InterHand_dataset():
         fix_shape(self.mano_layer)
 
         self.data_path = data_path
-        self.size = len(glob(osp.join(data_path, split, 'color_annot', '*.pkl')))
-        if not os.path.exists(os.path.join(self.data_path, self.split, 'ori_handdict')):
-            os.makedirs(os.path.join(self.data_path, self.split, 'ori_handdict'))
-        # self.size = len(glob(osp.join(data_path, split, 'anno', '*.pkl')))
+        self.size = len(glob(osp.join(data_path, 'color_annot', '*.pkl')))
+        if not os.path.exists(os.path.join(self.data_path, 'ori_handdict')):
+            os.makedirs(os.path.join(self.data_path, 'ori_handdict'))
+        # self.size = len(glob(osp.join(data_path, 'anno', '*.pkl')))
         self.start_idx = start
         self.vis = vis
 
@@ -310,8 +310,8 @@ class InterHand_dataset():
 
     def __getitem__(self, idx):
         idx = idx + self.start_idx#366358
-        img = cv.imread(osp.join(self.data_path, self.split, 'color_img', '{}.jpg'.format(idx)))
-        with open(os.path.join(self.data_path, self.split, 'color_annot', '{}.pkl'.format(idx)), 'rb') as file:
+        img = cv.imread(osp.join(self.data_path, 'color_img', '{}.jpg'.format(idx)))
+        with open(os.path.join(self.data_path, 'color_annot', '{}.pkl'.format(idx)), 'rb') as file:
             data = pickle.load(file)
 
         R = data['camera']['R']
@@ -355,7 +355,7 @@ class InterHand_dataset():
             plot_2d_hand(ax1, right2d[:, :2], order='uv')
             fig.savefig(os.path.join('./tmp', 'after_{}_{}.jpg'.format(idx, 'right')), )
             plt.close()
-        np.save(os.path.join(self.data_path, self.split, 'ori_handdict/{}'.format(idx)), hand_dict)
+        np.save(os.path.join(self.data_path, 'ori_handdict/{}'.format(idx)), hand_dict)
         return img, hand_dict
         # return img, mask, dense, hand_dict
 
@@ -365,12 +365,12 @@ if __name__ == '__main__':
     from torch.utils.data import DataLoader
     parser = argparse.ArgumentParser()
     parser.add_argument("--gen_anno", type=int, default=0)
-    parser.add_argument("--data_path", type=str, default='/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/')
-    parser.add_argument("--save_path", type=str, default='/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/')
+    parser.add_argument("--data_path", type=str, default='/nvme/lijun/dataset/renderih/')
+    parser.add_argument("--save_path", type=str, default='/nvme/lijun/dataset/renderih/')
     parser.add_argument("--vis", type=int,
                         default=0)
     parser.add_argument("--start", type=int,
-                        default=366358)#0)
+                        default=366358)#0) 366358
     opt = parser.parse_args()
 
     if opt.gen_anno:

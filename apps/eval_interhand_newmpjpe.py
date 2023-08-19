@@ -320,8 +320,8 @@ if __name__ == '__main__':
             pred_jleft = J_regressor['left'](pred_vleft)
             pred_jright = J_regressor['right'](pred_vright)
 
-            root_left_gt = joints_left_gt[:, 0:1]  # [:, 9:10]  [:, 0:1]
-            root_right_gt = joints_right_gt[:, 0:1]  # [:, 9:10] [:, 0:1]
+            root_left_gt = joints_left_gt[:, 9:10]  # [:, 9:10]  [:, 0:1]
+            root_right_gt = joints_right_gt[:, 9:10]  # [:, 9:10] [:, 0:1]
 
             ##### new #####
             gt_trans = root_left_gt - root_right_gt
@@ -331,8 +331,8 @@ if __name__ == '__main__':
             all_gt_left.append(verts_left_gt)
             all_gt_right.append(verts_right_gt)
             ################################
-            length_left_gt = torch.linalg.norm(joints_left_gt[:, 1] - joints_left_gt[:, 0], dim=-1) ### 9
-            length_right_gt = torch.linalg.norm(joints_right_gt[:, 1] - joints_right_gt[:, 0], dim=-1) ### 9
+            length_left_gt = torch.linalg.norm(joints_left_gt[:, 9] - joints_left_gt[:, 0], dim=-1) ### 9
+            length_right_gt = torch.linalg.norm(joints_right_gt[:, 9] - joints_right_gt[:, 0], dim=-1) ### 9
             joints_left_gt = joints_left_gt - root_left_gt
             verts_left_gt = verts_left_gt - root_left_gt
             joints_right_gt = joints_right_gt - root_right_gt
@@ -343,10 +343,10 @@ if __name__ == '__main__':
             joints_left_pred = J_regressor['left'](verts_left_pred)
             joints_right_pred = J_regressor['right'](verts_right_pred)
 
-            root_left_pred = joints_left_pred[:, 0:1]  # [:, 9:10]  [:, 0:1]
-            root_right_pred = joints_right_pred[:, 0:1]  # [:, 9:10]  [:, 0:1]
-            length_left_pred = torch.linalg.norm(joints_left_pred[:, 1] - joints_left_pred[:, 0], dim=-1) ### 9
-            length_right_pred = torch.linalg.norm(joints_right_pred[:, 1] - joints_right_pred[:, 0], dim=-1) ### 9
+            root_left_pred = joints_left_pred[:, 9:10]  # [:, 9:10]  [:, 0:1]
+            root_right_pred = joints_right_pred[:, 9:10]  # [:, 9:10]  [:, 0:1]
+            length_left_pred = torch.linalg.norm(joints_left_pred[:, 9] - joints_left_pred[:, 0], dim=-1) ### 9
+            length_right_pred = torch.linalg.norm(joints_right_pred[:, 9] - joints_right_pred[:, 0], dim=-1) ### 9
             scale_left = (length_left_gt / length_left_pred).unsqueeze(-1).unsqueeze(-1)
             scale_right = (length_right_gt / length_right_pred).unsqueeze(-1).unsqueeze(-1)
 
@@ -415,23 +415,23 @@ if __name__ == '__main__':
             paverts_loss['right'].append(errors_verts_right.cpu().numpy())
 
             ### left relative to right root ###
-            length_trans = pred_jleft[:, 0:1] - root_right_pred #### [:, 0:1] [:, 9:10]
+            length_trans = pred_jleft[:, 9:10] - root_right_pred #### [:, 0:1] [:, 9:10]
             pred_trans_list.append(length_trans.cpu().numpy())
-            length_left = pred_jleft[:, 0:1] - root_left_pred  #### [:, 0:1] [:, 9:10]
-            gt_length_left = orijoints_leftgt[:, 0:1, :] - orijoints_leftgt[:, 0:1, :] ### [:, 0:1] [:, 9:10]
-            gt_trans_left = orijoints_leftgt[:, 0:1, :] - orijoints_rightgt[:, 0:1, :] ### [:, 0:1] [:, 9:10]
-            double_leftvert = (pred_vleft - pred_jright[:, 0:1, :]) / (length_trans + 1e-8) * length_left
-            double_leftjoint = (pred_jleft - pred_jright[:, 0:1, :]) / (length_trans + 1e-8) * length_left
+            length_left = pred_jleft[:, 9:10] - root_left_pred  #### [:, 0:1] [:, 9:10]
+            gt_length_left = orijoints_leftgt[:, 9:10, :] - orijoints_leftgt[:, 9:10, :] ### [:, 0:1] [:, 9:10]
+            gt_trans_left = orijoints_leftgt[:, 9:10, :] - orijoints_rightgt[:, 9:10, :] ### [:, 0:1] [:, 9:10]
+            double_leftvert = (pred_vleft - pred_jright[:, 9:10, :]) / (length_trans + 1e-8) * length_left
+            double_leftjoint = (pred_jleft - pred_jright[:, 9:10, :]) / (length_trans + 1e-8) * length_left
             double_predvert.append(
-                np.concatenate((double_leftvert.cpu().numpy(), (pred_vright - pred_jright[:, 0:1, :]).cpu().numpy()),
+                np.concatenate((double_leftvert.cpu().numpy(), (pred_vright - pred_jright[:, 9:10, :]).cpu().numpy()),
                                axis=1))
             double_predjoint.append(
-                np.concatenate((double_leftjoint.cpu().numpy(), (pred_jright - pred_jright[:, 0:1, :]).cpu().numpy()),
+                np.concatenate((double_leftjoint.cpu().numpy(), (pred_jright - pred_jright[:, 9:10, :]).cpu().numpy()),
                                axis=1))
-            double_gtvert.append(np.concatenate((((oriverts_leftgt - orijoints_rightgt[:, 0:1, :]) / (
+            double_gtvert.append(np.concatenate((((oriverts_leftgt - orijoints_rightgt[:, 9:10, :]) / (
                     gt_trans_left + 1e-8) * gt_length_left).cpu().numpy(),
                                                  verts_right_gt.cpu().numpy()), axis=1))
-            double_gtjoint.append(np.concatenate((((orijoints_leftgt - orijoints_rightgt[:, 0:1, :]) / (
+            double_gtjoint.append(np.concatenate((((orijoints_leftgt - orijoints_rightgt[:, 9:10, :]) / (
                     gt_trans_left + 1e-8) * gt_length_left).cpu().numpy(),
                                                   joints_right_gt.cpu().numpy()), axis=1))
             total_time += (end_time - start_time)
@@ -534,7 +534,7 @@ if __name__ == '__main__':
         (pajoints_loss['left'][iou067].mean() * 1000 + pajoints_loss['right'][iou067].mean() * 1000) / 2), flush=True)
     print('pampjpe 1: {}'.format(
         (pajoints_loss['left'][iou1].mean() * 1000 + pajoints_loss['right'][iou1].mean() * 1000) / 2), flush=True)
-    print('vert mean error:')
+    print('vert pa _ mean error:')
     print('    left_pa: {} mm, right: {} mm'.format(verts_mean_loss_left, verts_mean_loss_right))
     print('    all_pa: {} mm'.format((verts_mean_loss_left + verts_mean_loss_right) / 2))
 

@@ -20,7 +20,7 @@ from common.myhand.utils.comm import rotation_matrix_to_angle_axis
 from dataset.dataset_utils import IMG_SIZE
 from common.utils.mano import MANO
 from common.utils.mano import Jr
-from common.utils.loss_utils import DiceLoss, SDFLoss, TryLoss
+
 from common.utils.focal_loss import FocalLoss
 # from common.vis_utils import mano_two_hands_renderer
 
@@ -256,16 +256,12 @@ class decoder(nn.Module):
                 self.diceloss = DiceLoss()
             else:
                 self.diceloss = FocalLoss()
-        if cfg.sdf or self.cfg.data_type == 'interhand_sdf':
-            self.sdf = TryLoss()
-            self.sdf1 = SDFLoss(self.right_face, self.left_face)
-            self.sdf_thresh = cfg.sdf_thresh
+
         print('edge : ', self.cfg.edge, flush=True)
         print('normal : ', self.cfg.normal, flush=True)
         print('vert2d : ', self.cfg.vert2d, flush=True)
         print('decoder mano : ', self.mano, flush=True)
         print('renderer : ', cfg.render, flush=True)
-        print('sdf : ', cfg.sdf, flush=True)
 
     def get_upsample_weight(self):
         return self.unsample_layer.weight.data
@@ -309,58 +305,6 @@ class decoder(nn.Module):
         verts3d = {'left': self.coord_head(Lf), 'right': self.coord_head(Rf)}
         verts2d = {}
         result = {}
-        # pred_mano_left = {}
-        # pred_mano_right = {}
-        # for hand_type in ['left', 'right']:
-        #     verts2d[hand_type] = projection_batch(scale[hand_type], trans2d[hand_type], verts3d[hand_type], img_size=cfg.input_img_shape[0])
-        #     result['v3d' + '_' + hand_type] = self.unsample_layer(verts3d[hand_type].transpose(1, 2)).transpose(1, 2)
-        #     result['verts2d' + '_' + hand_type] = projection_batch(scale[hand_type], trans2d[hand_type], result['v3d' + '_' + hand_type], img_size=1)#cfg.input_img_shape[0])
-        #     result['scale' + '_' + hand_type] = scale[hand_type]
-        #     result['trans2d' + '_' + hand_type] = trans2d[hand_type]
-        # result['j3d_left'] = self.J_regressor['left'](result['v3d_left'])#self.mano_left.get_3d_joints(result['v3d_left'])
-        # result['j3d_right'] = self.J_regressor['right'](result['v3d_right'])#self.mano_right.get_3d_joints(result['v3d_right'])
-        #
-        # if not self.mano:
-        #     pred_mano_left['verts3d'] = result['v3d_left']
-        #     pred_mano_left['joints3d'] = result['j3d_left']
-        #     pred_mano_right['verts3d'] = result['v3d_right']
-        #     pred_mano_right['joints3d'] = result['j3d_right']
-        # else:
-        #     pose_param_left, shape_param_left, pose_rotmat_param_left = self.param_regressor(result['v3d_left'])
-        #     pose_param_right, shape_param_right, pose_rotmat_param_right = self.param_regressor(result['v3d_right'])
-        #     shape_param_left = F.tanh(shape_param_left) * 3
-        #     shape_param_right = F.tanh(shape_param_right) * 3
-        #     mano_verts_left, mano_joints_left = self.mano_left_layer(rodrigues_batch(pose_param_left[:, :3]), pose_param_left[:, 3:], shape_param_left)
-        #     mano_verts_right, mano_joints_right = self.mano_right_layer(rodrigues_batch(pose_param_right[:, :3]), pose_param_right[:, 3:], shape_param_right)
-        #
-        #
-        #     #### mano to vertex/joints ####
-        #     # gt_vertices_left, gt_joints_left, gt_joints2d_left = mano_convert(targets['left'], self.mano_left_layer)
-        #     # gt_vertices_right, gt_joints_right, gt_joints2d_right = mano_convert(targets['right'], self.mano_right_layer)
-        #
-        #     pred_mano_left['verts3d'] = mano_verts_left / 1000
-        #     pred_mano_left['joints3d'] = mano_joints_left / 1000
-        #     pred_mano_left['mano_pose'] = pose_param_left
-        #     pred_mano_left['mano_shape'] = shape_param_left
-        #
-        #     # pred_mano_left['joints_img'] = result['verts2d' + '_' + 'left'] / cfg.input_img_shape[0]
-        #
-        #     pred_mano_right['verts3d'] = mano_verts_right / 1000
-        #     pred_mano_right['joints3d'] = mano_joints_right / 1000
-        #     pred_mano_right['mano_pose'] = pose_param_right
-        #     pred_mano_right['mano_shape'] = shape_param_right
-        # ### rescale vertices and joints ###
-        #
-        # pred_mano_left['joints_img'] = projection_batch(scale['left'], trans2d['left'], pred_mano_left['joints3d'],
-        #                                                 img_size=1)  # / cfg.input
-        # pred_mano_right['joints_img'] = projection_batch(scale['right'], trans2d['right'], pred_mano_right['joints3d'],
-        #                                                 img_size=1)
-        # result['j2d_left'] = projection_batch(scale['left'], trans2d['left'], result['j3d_left'], img_size=1)
-        # result['j2d_right'] = projection_batch(scale['right'], trans2d['right'], result['j3d_right'],
-        #                                        img_size=1)
-        # result['vert2d_left'] = projection_batch(scale['left'], trans2d['left'], pred_mano_left['verts3d'], img_size=1)
-        # result['vert2d_right'] = projection_batch(scale['right'], trans2d['right'], pred_mano_right['verts3d'],
-        #                                           img_size=1)
         result = {'verts3d': {}, 'verts2d': {}}
         for hand_type in ['left', 'right']:
             verts2d[hand_type] = projection_batch(scale[hand_type], trans2d[hand_type], verts3d[hand_type],

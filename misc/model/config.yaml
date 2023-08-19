@@ -1,0 +1,22 @@
+MODEL:
+  DECONV_DIMS:
+  - 256
+  - 256
+  - 256
+  - 256
+  ENCODER_TYPE: resnet50
+  GCN_IN_DIM:
+  - 512
+  - 256
+  - 128
+  GCN_OUT_DIM:
+  - 256
+  - 128
+  - 64
+  IMG_DIMS:
+  - 256
+  - 128
+  - 64
+  freeze_upsample: true
+  graph_k: 2
+  graph_layer_num: 4

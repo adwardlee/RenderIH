@@ -29,10 +29,10 @@ class DataProvider:
             self.build()
         try:
             self.iteration += 1
-            return self.dataiter.next()
+            return next(self.dataiter)#self.dataiter.next()
 
         except StopIteration:
             self.epoch += 1
             self.build()
             self.iteration = 1
-            return self.dataiter.next()
+            return next(self.dataiter)#self.dataiter.next()

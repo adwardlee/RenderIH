@@ -268,7 +268,11 @@ def render_data(save_path, split, start, end):
         right_mask[right_mask < 0.2] = 0
         iou = bm0(left_mask.cpu().numpy()[0, :,:,0], right_mask.cpu().numpy()[0,:,:,0])
         iou_list[idx] = iou
-    np.save(save_path + 'iou_{}_{}'.format(start, end), iou_list)
+    output = []
+    for key in iou_list:
+        output.append(iou_list[key])
+    output = np.array(output)
+    np.save(save_path + 'iou_{}_{}'.format(start, end), output)
 
 
 def render_tzionas(data_path):
@@ -399,18 +403,19 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    # parser.add_argument("--data_path", type=str,
-    #                     default='/mnt/user/E-shenfei.llj-356552/data/dataset/interhand_5fps/interhand_data/')
     parser.add_argument("--data_path", type=str,
-                        default='/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/tziona/original/')
+                        default='/nvme/lijun/dataset/interhand/InterHand2.6M_5fps_batch1/processed/')
+    # parser.add_argument("--data_path", type=str,
+                        # default='/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/tziona/original/')
 
-    parser.add_argument("--save_path", type=str, default='/mnt/user/E-shenfei.llj-356552/data/dataset/interhand_5fps/interhand_data/')
+    parser.add_argument("--save_path", type=str, default='/nvme/lijun/dataset/interhand/InterHand2.6M_5fps_batch1/processed/')
     parser.add_argument("--start", type=int,
                         default=0)
     parser.add_argument("--end", type=int,
-                        default=130000)
+                        default=270000)###130000 tzionas
     opt = parser.parse_args()
 
-    # for split in ['test']:
-    #     render_data(opt.save_path, split, opt.start, opt.end)
-    render_tzionas(opt.data_path)
+    for split in ['test']:
+        render_data(opt.save_path, split, opt.start, opt.end)
+    print('finish compute iou ih2.6m', flush=True)
+    # render_tzionas(opt.data_path)

@@ -10,6 +10,7 @@ from glob import glob
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 
 from models.manolayer import ManoLayer, rodrigues_batch
@@ -238,8 +239,8 @@ class InterHand_dataset():
         self.mano_layer = {'right': ManoLayer(mano_path['right'], center_idx=None),
                            'left': ManoLayer(mano_path['left'], center_idx=None)}
         fix_shape(self.mano_layer)
-        if not os.path.exists(os.path.join(self.data_path, self.split, 'ori_handdict')):
-            os.makedirs(os.path.join(self.data_path, self.split, 'ori_handdict'))
+        if not os.path.exists(os.path.join(data_path, self.split, 'ori_handdict')):
+            os.makedirs(os.path.join(data_path, self.split, 'ori_handdict'))
 
         self.data_path = data_path
         self.size = len(glob(osp.join(data_path, split, 'anno', '*.pkl')))
@@ -295,14 +296,14 @@ if __name__ == '__main__':
     from torch.utils.data import DataLoader
     parser = argparse.ArgumentParser()
     parser.add_argument("--gen_anno", type=int, default=0)
-    parser.add_argument("--data_path", type=str, default='/mnt/workspace/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/')
-    parser.add_argument("--save_path", type=str, default='/mnt/workspace/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/')
+    parser.add_argument("--data_path", type=str, default='/nvme/lijun/dataset/interhand/InterHand2.6M_5fps_batch1/')
+    parser.add_argument("--save_path", type=str, default='/nvme/lijun/dataset/interhand/InterHand2.6M_5fps_batch1/processed/')
     parser.add_argument("--start", type=int,
                         default=0)#366358)
     opt = parser.parse_args()
 
     if opt.gen_anno:
-        for split in ['train', 'test', 'val']:
+        for split in ['train', 'test']:#, 'val']:
             select_data(opt.data_path, opt.save_path, split)
     else:
         idx = 0

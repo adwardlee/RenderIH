@@ -2,7 +2,7 @@
 Official PyTorch implementation of "RenderIH: A large-scale synthetic dataset for 3D interacting hand pose estimation", ICCV 2023
 
 ## Our dataset
-[RenderIH](./rendering_code): Download from Google Drive: [imgs](https://drive.google.com/file/d/1nl5VZvnKN3SIJnBOis4rfsuG_DT0smLl/view?usp=drive_link), [annotations](https://drive.google.com/file/d/1wOuZTgWODhyelLXJr7Kv9tuEiFxcWIif/view?usp=drive_link); or BaiduPan: [imgs](https://pan.baidu.com/s/1M0vxWRbBu1lH_fV9FPBHbg?pwd=mo5n) [annotations](https://pan.baidu.com/s/1XFIbU_QHT1Smi2WL_LmCJw?pwd=ajbf). Untar the compressed files, and run step7.
+[RenderIH](./rendering_code): Download from Google Drive: [imgs](https://drive.google.com/file/d/1nl5VZvnKN3SIJnBOis4rfsuG_DT0smLl/view?usp=drive_link), [annotations](https://drive.google.com/file/d/1wOuZTgWODhyelLXJr7Kv9tuEiFxcWIif/view?usp=drive_link); or BaiduPan: [imgs](https://pan.baidu.com/s/1M0vxWRbBu1lH_fV9FPBHbg?pwd=mo5n) [annotations](https://pan.baidu.com/s/1XFIbU_QHT1Smi2WL_LmCJw?pwd=ajbf). Untar the compressed files, and run step7 in rendering_code.
 
 ## Prequeries
 download and unzip [misc.tar].
@@ -38,22 +38,27 @@ opencv4.7:`pip install opencv_python==4.7.0.72`
 "[sdf](https://github.com/JiangWenPL/multiperson/tree/master/sdf)" change **AT_CHECK** in `multiperson/sdf/csrc/sdf_cuda.cpp` to **TORCH_CHECK** 
 
 mmcv:`pip install -U openmim`,`mim install mmcv`
-numpy,tqdm,yacs,tensorboardX,scipy,imageio,matplotlib,scikit-image,manopth,timm,imgaug,fvcore,iopath
+numpy,tqdm,yacs==0.1.8,tensorboardX,scipy,imageio,matplotlib,scikit-image,manopth,timm,imgaug,fvcore,iopath
 
 
 ## DATASET
-INTERHAND2.6M: 1) Download [InterHand2.6M](https://mks0601.github.io/InterHand2.6M/) dataset and unzip it. (Noted: we used the v1.0_5fps version and H+M subset for training and evaluating)
+### INTERHAND2.6M
+1) Download [InterHand2.6M](https://mks0601.github.io/InterHand2.6M/) dataset and unzip it. (Noted: we used the v1.0_5fps version and H+M subset for training and evaluating)
 
 Process the dataset by :
 
 ```python utils/dataset_gen/interhand.py --data_path PATH_OF_INTERHAND2.6M --save_path ./interhand2.6m/ --gen_anno 1```
-```python utils/dataset_gen/interhand.py --data_path PATH_OF_INTERHAND2.6M --save_path ./interhand2.6m/ --gen_anno 0```
+```python utils/dataset_gen/interhand.py --data_path ./interhand2.6m/ --gen_anno 0```
 Replace PATH_OF_INTERHAND2.6M with your own store path of InterHand2.6M dataset.
 
+### Tzionas Dataset
+1) Download Hand-Hand Interaction from the [website](https://files.is.tue.mpg.de/dtzionas/Hand-Object-Capture/), categories from Walking to Hugging (01.zip~07.zip)
 
 ## Training
 `python apps/train.py --gpu 0,1,2,3`
 change `INTERHAND_PATH` in `utils/default.yaml` to the dataset path
+
+`utils/default.yaml` has some argments that can be tuned
 
 ## Evaluation
 `python apps/eval_interhand.py --model MODEL_PATH --data_path INTERHAND2.6M_PATH`

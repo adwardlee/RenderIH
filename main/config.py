@@ -61,7 +61,6 @@ class Config:
         cam = True
         data_dir = '/mnt/user/E-shenfei.llj-356552/data/dataset/interhand_5fps/interhand_data/'
         data_type = 'interhand_dataaug' ######## for data augmentation ##### interhand_xinchuan ## interhand_dataaug ### interhand_subset ### interhand_adapt#####
-        ## xinchuan_subset ## #  # interhand_sdf ###
         lr_dec_epoch = [10*i for i in range(2,7,2)]
         end_epoch = 90
         seed = 2453
@@ -92,8 +91,6 @@ class Config:
         lambda_normal = 10
         lambda_edge = 100
         sdf_thresh = 0.01
-        sdf_train = 'sdf10mm_train.npy'#'sdf10mm_train.npy' , 'sdfloss.npy'
-        sdf_test = 'sdf10mm_test.npy'#'sdf10mm_test.npy', 'sdfloss_test.npy'
 
         ## testing config
         test_batch_size = 384

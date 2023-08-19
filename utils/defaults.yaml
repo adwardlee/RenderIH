@@ -24,7 +24,7 @@ MODEL_PARAM:
   OPTIM_PATH: "none"
   LrSc_PATH: "none"
 DATASET:
-  INTERHAND_PATH: "/mnt/user/E-shenfei.llj-356552/data/dataset/interhand_5fps/interhand_data/"
+  INTERHAND_PATH: "/nvme/lijun/dataset/interhand/InterHand2.6M_5fps_batch1/processed/"
   SYN_PATH: "/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/"
   SINGLE_PATH: "/mnt/user/E-shenfei.llj-356552/data/dataset/interhand_5fps/singlehand/"
   EGO3D_PATH: "/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/ego3dhands/"

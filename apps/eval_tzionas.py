@@ -24,7 +24,6 @@ from dataset.interhand import fix_shape, InterHand_dataset
 from common.myhand.lijun_model_graph import load_graph_model
 from common.myhand.lijun_model_newgraph import load_new_model
 from utils.eval_metrics import compute_cdev, nanmean
-from common.utils.loss_utils import DiceLoss, SDFLoss, TryLoss
 
 class Tzionas_dataset():
     def __init__(self, data_path):

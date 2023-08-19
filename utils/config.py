@@ -10,7 +10,7 @@ def get_cfg_defaults():
     # This is for the "local variable" use pattern
     defaults_abspath = os.path.abspath(os.path.join(os.path.dirname(__file__), 'defaults.yaml'))
     _C.merge_from_file(defaults_abspath)
-    _C.set_new_allowed(False)
+    _C.set_new_allowed(True)
     return _C.clone()
 
 
