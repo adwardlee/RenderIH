@@ -1,0 +1,43 @@
+# compilation and distribution
+__pycache__
+_ext
+*.pyc
+*.so
+build/
+dist/
+*.egg-info/
+
+# pytorch/python formats
+*.pth
+*.pkl
+
+# ipython/jupyter notebooks
+*.ipynb
+**/.ipynb_checkpoints/
+
+# Editor temporaries
+*.swn
+*.swo
+*.swp
+*~
+
+# Pycharm editor settings
+.idea
+
+# VS code 
+.vscode
+
+# MacOS
+.DS_Store
+
+# project dirs
+/data
+/datasets
+models
+output
+exps
+predictions
+
+# hidden folder for aml configs
+.azureml
+.git
