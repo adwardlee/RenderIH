@@ -64,12 +64,13 @@ change `INTERHAND_PATH` in `utils/default.yaml` to the dataset path
 `python apps/eval_interhand.py --model MODEL_PATH --data_path INTERHAND2.6M_PATH`
 change `MODEL_PATH` to the pretrained model path, and `INTERHAND2.6M_PATH` to dataset path.
 
-data_type=0, dataset/interhand.py syn=True, 使用renderih与real一起训练
+## Misllaneous
+data_type=0, dataset/interhand.py syn=True, use renderih together with Interhand2.6M
 
-data_type=1, loader_ori 使用synthetic+real
+data_type=1, loader_ori using synthetic+real
 
-data_type=2, loader.py 使用interhand_withother.py, 训练ego3dhand , h2o3d，或者renderih
+data_type=2, loader.py using interhand_withother.py, training ego3dhand , h2o3d，or renderih
 
-data_type=3, loader.py, 使用interhand_orisyn.py ，使用pose和interhand相同合成数据
+data_type=3, loader.py, using interhand_orisyn.py ，using the synthetic data
 
-data_type=4, loader.py, 使用interhand_subset.py ，使用poseaug, subset合成数据与full real interhand data
+data_type=4, loader.py, using interhand_subset.py ，poseaug, subset synthetic and full real interhand data
