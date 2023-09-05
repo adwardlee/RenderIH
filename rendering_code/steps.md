@@ -1,9 +1,9 @@
 ## Steps to generate synthetic data
-1.get augmented pose from X
-2.step2 remove duplicate pose and select camera view
+1. get augmented pose from X
+2. step2 remove duplicate pose and select camera view
 3. make filename consecutive
-4.use load_mano_diffbg to generate imgs
-5.reorder generate img and step1 annot
+4. use load_mano_diffbg to generate imgs
+5. reorder generate img and step1 annot
 6. change image size and annotation-camera to 256x256
 7. generate hms/mask/dense or gen ori_handdict, change data_path to `xxx` where xxx is the path to extract the synthetic data
 

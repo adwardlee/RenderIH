@@ -59,7 +59,7 @@ class handDataset(Dataset):
             else:
                 split = 'test'
             if data_type == 2:
-                self.dataset['inter'] = InterHand_other(interPath, cfg, split)
+                self.dataset['inter'] = InterHand_other(interPath, cfg.DATASET, split)
             elif data_type == 3:
                 self.dataset['inter'] = InterHand_orisyn(interPath, synPath, split)
             elif data_type == 4:

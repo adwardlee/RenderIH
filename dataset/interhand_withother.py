@@ -41,14 +41,14 @@ class InterHand_other():
         self.h2o3d_img_path = cfg.H2O3D_PATH + 'img/' #'/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/h2o3d/refine/img/'
         self.h2o3d_annot_path = cfg.H2O3D_PATH + 'anno/' #'/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/h2o3d/refine/anno/'
         self.single_path = cfg.SINGLE_PATH #'/mnt/user/E-shenfei.llj-356552/data/dataset/interhand_5fps/singlehand/'
-        self.syns_img_path = ''
-        self.syns_annot_path = ''
-        self.sample_idx = random.sample(range(366358, 1020000 + 366358), 1020000)
-        self.syns = False
+        self.syns_img_path = '/nvme/lijun/dataset/renderih/train/color_img/'
+        self.syns_annot_path = '/nvme/lijun/dataset/renderih/train/color_annot/'
+        self.sample_idx = random.sample(range(366358, 1000000 + 366358), 1000000)
+        self.syns = True
         self.h2o3d = False
         self.ego3d = False
         self.black = False
-        self.single = True
+        self.single = False
 
     def __len__(self):###58666 #### 39903
         if self.split == 'train':
@@ -64,12 +64,12 @@ class InterHand_other():
             elif self.single:
                 self.size = 340000
                 return self.size
-            return 1020000
+            return 1000000
         return self.size
 
     def __getitem__(self, idx):
         if self.syns:
-            cur_idx = self.sample_idx[idx - self.size]
+            cur_idx = self.sample_idx[idx]# - self.size]
             img = cv.imread(osp.join(self.syns_path, self.split, 'color_img', '{}.jpg'.format(cur_idx)))
             hand_dict = np.load(os.path.join(self.syns_path, self.split, 'ori_handdict', '{}.npy'.format(cur_idx)),
                                 allow_pickle=True)

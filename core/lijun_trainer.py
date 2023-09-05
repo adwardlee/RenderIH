@@ -354,7 +354,7 @@ def train_gcn(rank=0, world_size=1, cfg=None, dist_training=False, only_j3d=0):
                             #'optimizer': optimizer.state_dict(),
                                 }, os.path.join(cfg.SAVE.SAVE_DIR, str(epoch + 1) + '.pth'))
 
-        if (epoch + 1) % 50 == 0 or epoch+1 == cfg.TRAIN.EPOCHS: #or epoch == 0:
+        if (epoch + 1) % 10 == 0 or epoch+1 == cfg.TRAIN.EPOCHS: #or epoch == 0:
             network.eval()
 
             gt_mesh_left = []

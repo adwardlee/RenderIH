@@ -2,7 +2,7 @@
 Official PyTorch implementation of "RenderIH: A large-scale synthetic dataset for 3D interacting hand pose estimation", ICCV 2023
 
 ## Our dataset
-[RenderIH](./rendering_code): Download from Google Drive: [imgs](https://drive.google.com/file/d/1nl5VZvnKN3SIJnBOis4rfsuG_DT0smLl/view?usp=drive_link), [annotations](https://drive.google.com/file/d/1wOuZTgWODhyelLXJr7Kv9tuEiFxcWIif/view?usp=drive_link); or BaiduPan: [imgs](https://pan.baidu.com/s/1M0vxWRbBu1lH_fV9FPBHbg?pwd=mo5n) [annotations](https://pan.baidu.com/s/1XFIbU_QHT1Smi2WL_LmCJw?pwd=ajbf). Untar the compressed files, and run step7 in rendering_code.
+[RenderIH](./rendering_code): Download from Google Drive: [imgs](https://drive.google.com/file/d/1nl5VZvnKN3SIJnBOis4rfsuG_DT0smLl/view?usp=drive_link), [annotations](https://drive.google.com/file/d/1wOuZTgWODhyelLXJr7Kv9tuEiFxcWIif/view?usp=drive_link); or BaiduPan: [imgs](https://pan.baidu.com/s/1M0vxWRbBu1lH_fV9FPBHbg?pwd=mo5n) [annotations](https://pan.baidu.com/s/1XFIbU_QHT1Smi2WL_LmCJw?pwd=ajbf). Untar the compressed files, and run [step7](https://github.com/adwardlee/RenderIH/blob/main/rendering_code/step7_gen_annotations.py) in rendering_code.
 
 ## Prequeries
 download and unzip [misc.tar].
@@ -16,7 +16,6 @@ After collecting the above necessary files, the directory structure of `./misc` 
 │   └── MANO_RIGHT.pkl
 ├── model
 │   └── config.yaml
-│   └── pretrain.pth
 ├── graph_left.pkl
 ├── graph_right.pkl
 ├── upsample.pkl
@@ -54,6 +53,10 @@ Replace PATH_OF_INTERHAND2.6M with your own store path of InterHand2.6M dataset.
 ### Tzionas Dataset
 1) Download Hand-Hand Interaction from the [website](https://files.is.tue.mpg.de/dtzionas/Hand-Object-Capture/), categories from Walking to Hugging (01.zip~07.zip)
 
+## Pretrained model
+[model without syntheic data](https://drive.google.com/file/d/192abd-pdyHl89Td0or7fll38KCsBC7bv/view?usp=drive_link)
+[model with synthetic data](https://drive.google.com/file/d/13zsI-8PQn2UFqOjwObZrw9KHIpdFnHrg/view?usp=drive_link)
+
 ## Training
 `python apps/train.py --gpu 0,1,2,3`
 change `INTERHAND_PATH` in `utils/default.yaml` to the dataset path
@@ -74,3 +77,15 @@ data_type=2, loader.py using interhand_withother.py, training ego3dhand , h2o3d�
 data_type=3, loader.py, using interhand_orisyn.py ，using the synthetic data
 
 data_type=4, loader.py, using interhand_subset.py ，poseaug, subset synthetic and full real interhand data
+
+## Citation
+
+```bibtex
+@misc{du-etal-2022-chinese-llama-2,
+  author = {Lijun Li, Linrui Tian, Xindi Zhang, Qi Wang, Bang Zhang, Liefeng Bo, Mengyuan Liu,Chen Chen},
+  title = {RenderIH: A large-scale synthetic dataset for 3D interacting hand pose estimation},
+  year = {2023},
+  publisher = {ICCV},
+  journal = {ICCV2023},
+}
+```

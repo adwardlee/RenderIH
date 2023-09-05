@@ -1,5 +1,5 @@
-SEED: 25
-LOG_DIR: 'rebut/reproduce/seed25_oridata.log'
+SEED: 88
+LOG_DIR: 'rebut/reproduce/epoch200_oridata1.log'
 MODEL_NAME: 'graph'
 J3D: 0
 MISC:
@@ -25,24 +25,24 @@ MODEL_PARAM:
   LrSc_PATH: "none"
 DATASET:
   INTERHAND_PATH: "/nvme/lijun/dataset/interhand/InterHand2.6M_5fps_batch1/processed/"
-  SYN_PATH: "/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/"
+  SYN_PATH: "/nvme/lijun/dataset/renderih/"
   SINGLE_PATH: "/mnt/user/E-shenfei.llj-356552/data/dataset/interhand_5fps/singlehand/"
   EGO3D_PATH: "/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/ego3dhands/"
   H2O3D_PATH: "/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/h2o3d/refine/"
-  BLACK_PATH: "/mnt/user/E-shenfei.llj-356552/data/dataset/interhand_5fps/interhand_data/train/black_all/"
-  DATA_TYPE: 0
+  BLACK_PATH: "/nvme/lijun/dataset/renderih/"
+  DATA_TYPE: 2
 DATA_AUGMENT:
   THETA: 90
   SCALE: 0.1
   UV: 0.0
 TRAIN:
-  DIST_PORT: 12345
+  DIST_PORT: 12346
   OPTIM: 'adam'
   current_epoch: 0
   lr_decay_step: 80
   lr_decay_gamma: 0.1
   warm_up: 3
-  EPOCHS: 100
+  EPOCHS: 200
   BATCH_SIZE: 64
   LR: 3.0e-4
   dropout: 0.05
@@ -68,8 +68,8 @@ LOSS_WEIGHT:
     UPSAMPLE: 1.0
 TB:
   SHOW_GAP: 200
-  SAVE_DIR: "./rebut/reproduce/seed25_oridata/log/exp"
+  SAVE_DIR: "./rebut/reproduce/oridata1/log/exp"
 SAVE:
   SAVE_GAP: 10
-  SAVE_DIR: "./rebut/reproduce/seed25_oridata/model/exp"
+  SAVE_DIR: "./rebut/reproduce/oridata1/model/exp"
 
