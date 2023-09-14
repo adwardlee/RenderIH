@@ -357,7 +357,11 @@ def render_tzionas(data_path):
     #         # left_j2d = left_j2d[:, :2]/ left_j2d[:, 2:]
     #         # plot_2d_hand(ax1, left_j2d[:, :2], order='uv')
     #         # fig.savefig(os.path.join('tmp_{}.jpg'.format(idx)), )
-    np.save('iou', iou_list)
+    output = []
+    for key in iou_list:
+        output.append(iou_list[key])
+    output = np.array(output)
+    np.save('tzionas_iou', output)
 class InterHand_dataset():
     def __init__(self, data_path, split):
         assert split in ['train', 'test', 'val']
@@ -415,7 +419,7 @@ if __name__ == '__main__':
                         default=270000)###130000 tzionas
     opt = parser.parse_args()
 
-    for split in ['test']:
-        render_data(opt.save_path, split, opt.start, opt.end)
+    # for split in ['test']:
+        # render_data(opt.save_path, split, opt.start, opt.end)
     print('finish compute iou ih2.6m', flush=True)
-    # render_tzionas(opt.data_path)
+    render_tzionas(opt.data_path)

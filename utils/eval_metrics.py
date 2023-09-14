@@ -45,6 +45,6 @@ def compute_cdev(pred_v3d_o, pred_v3d_r, gt_left, gt_right):
     disp_ro[dist_ro > contact_dist] = float("nan")
     cd = (disp_ro ** 2).sum(dim=2).sqrt()
     err_ro = nanmean(cd, axis=1)  # .cpu().numpy()  # m
-    print('error shape', err_ro.shape, flush=True)
-    print('error value', err_ro, flush=True)
+    # print('error shape', err_ro.shape, flush=True)
+    # print('error value', err_ro, flush=True)
     return (err_ro)

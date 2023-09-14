@@ -267,7 +267,7 @@ if __name__ == '__main__':
 
     faces_left = mano_layer['left'].get_faces()
     faces_right = mano_layer['right'].get_faces()
-    dataset = Tzionas_dataset('/mnt/user/E-shenfei.llj-356552/workgroup/lijun/hand_dataset/tziona/original/')
+    dataset = Tzionas_dataset(opt.data_path)
     # dataset = handDataset(InterHand_dataset(opt.data_path, split='test'))
     dataloader = DataLoader(dataset, batch_size=opt.bs, shuffle=False,
                             num_workers=4, drop_last=False, pin_memory=True)

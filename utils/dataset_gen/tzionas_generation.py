@@ -3,11 +3,13 @@ import pickle
 import numpy as np
 import cv2 as cv
 import os
+import sys
+import argparse
 import torchvision.transforms.functional as F
 import matplotlib.pyplot as plt
 
+sys.path.append('./')
 from common.utils.mano import MANO
-from .vis import plot_2d_hand
 
 def cut_img(img_list, label2d_list, radio=0.7, img_size=256):
     Min = []
@@ -142,9 +144,9 @@ def get_frompkl(filename):
     return joint3d, vert3d, pose, shape, trans
 
 def tzionas_get_full2d():
-    for j in range(3, 8):
-        detection_path = '/mnt/workspace/workgroup/lijun/hand_dataset/tziona/{}/1/joints_2D_GT/'.format(str(j).zfill(2))
-        rgb_path = '/mnt/workspace/workgroup/lijun/hand_dataset/tziona/{}/1/rgb/'.format(str(j).zfill(2))
+    for j in range(1, 8):
+        detection_path = '/nvme/lijun/dataset/tzionas/data/{}/1/joints_2D_GT/'.format(str(j).zfill(2))
+        rgb_path = '/nvme/lijun/dataset/tzionas/data/{}/1/rgb/'.format(str(j).zfill(2))
         img_length = len(os.listdir(rgb_path))
         file_length = len([x for x in os.listdir(detection_path) if x[-4:] == '.txt'])
         for i in range(0, file_length - 1):
@@ -156,13 +158,13 @@ def tzionas_get_full2d():
     return
 
 
-def main():
+def main(opt):
     allnums = [ x for x in list(range(1, 8))]
-    mano_annot = '/mnt/workspace/workgroup/lijun/hand_dataset/tziona/mano_annot/IJCV16___fakeGT___IJCV___{}___Model_Hand_{}___ncomps45/'
-    detection_path = '/mnt/workspace/workgroup/lijun/hand_dataset/tziona/original/{}/1/joints_2D_GT/'
-    rgb_path = '/mnt/workspace/workgroup/lijun/hand_dataset/tziona/original/{}/1/rgb/'
-    plot_path = '/mnt/workspace/workgroup/lijun/hand_dataset/tziona/original/plot/'
-    output_path = '/mnt/workspace/workgroup/lijun/hand_dataset/tziona/original/all/'#all/'
+    mano_annot = os.path.join(opt.mano_annot, 'IJCV16___Results_MANO___parms_for___joints21/IJCV16___fakeGT___IJCV___{}___Model_Hand_{}___ncomps45/')#'/mnt/workspace/workgroup/lijun/hand_dataset/tziona/mano_annot/IJCV16___fakeGT___IJCV___{}___Model_Hand_{}___ncomps45/'
+    detection_path = os.path.join(opt.detection_path, '{}/1/joints_2D_GT/')#'/mnt/workspace/workgroup/lijun/hand_dataset/tziona/original/{}/1/joints_2D_GT/'
+    rgb_path = os.path.join(opt.rgb_path, '{}/1/rgb/' )#'/mnt/workspace/workgroup/lijun/hand_dataset/tziona/original/{}/1/rgb/'
+    plot_path = opt.plot_path #'/mnt/workspace/workgroup/lijun/hand_dataset/tziona/original/plot/'
+    output_path = opt.output_path #'/mnt/workspace/workgroup/lijun/hand_dataset/tziona/original/all/'#all/'
     #output_annot = '/mnt/workspace/workgroup/lijun/hand_dataset/tziona/mano/'
     mean = [0.485, 0.456, 0.406]
     std = [0.229, 0.224, 0.225]
@@ -175,6 +177,8 @@ def main():
                    'right': Jr(mano_layer['right'].J_regressor)}
     idx = 0
     camera = np.array([[525.0, 0, 319.5], [0, 525, 239.5], [0, 0, 1]])
+    import pdb
+    pdb.set_trace()
     for i in allnums:
         img_path = rgb_path.format(str(i).zfill(2))
         detection_path1 = detection_path.format(str(i).zfill(2))
@@ -224,6 +228,13 @@ def main():
 
 if __name__ == '__main__':
     # tzionas_get_full2d()
+    args = argparse.ArgumentParser()
+    args.add_argument("--mano_annot", type=str, default='/nvme/lijun/dataset/tzionas/data/')
+    args.add_argument('--detection_path', type=str, default='/nvme/lijun/dataset/tzionas/data/')
+    args.add_argument("--rgb_path", type=str, default='/nvme/lijun/dataset/tzionas/data/')
+    args.add_argument("--plot_path", type=str, default='/nvme/lijun/dataset/tzionas/data/plot/')
+    args.add_argument('--output_path', type=str, default='/nvme/lijun/dataset/tzionas/data/all/')
+    opt = args.parse_args()
     print('finish generate annotation ', flush=True)
-    main()
+    main(opt)
 
