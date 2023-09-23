@@ -91,7 +91,7 @@ data_type=4, loader.py, using interhand_subset.py ，poseaug, subset synthetic a
 ```bibtex
 @article{li2023renderih,
   title={RenderIH: A Large-scale Synthetic Dataset for 3D Interacting Hand Pose Estimation},
-  author={Li, Lijun and Tian, Linrui and Zhang, Xindi and Wang, Qi and Zhang, Bang and Bo, Liefeng and Liu, Mengyuan and Chen, Chen},
+  author={Li, Lijun and Tian, Linrui and Zhang, Xindi and Wang, Qi and Zhang, Bang and Liu, Mengyuan and Chen, Chen},
   journal={arXiv preprint arXiv:2309.09301},
   year={2023}
 }
