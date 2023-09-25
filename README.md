@@ -84,8 +84,7 @@ data_type=3, loader.py, using interhand_orisyn.py ，using the synthetic data
 
 data_type=4, loader.py, using interhand_subset.py ，poseaug, subset synthetic and full real interhand data
 
-`utils/compute_maskiou.py` 计算interhand数据集的iou分布
-
+`utils/compute_maskiou.py`. Calculate the iou distribution for hand data.
 ## Citation
 
 ```bibtex
