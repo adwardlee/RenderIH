@@ -73,7 +73,7 @@ change `INTERHAND_PATH` in `utils/default.yaml` to the dataset path
 change `MODEL_PATH` to the pretrained model path, and `INTERHAND2.6M_PATH` to dataset path.
 
 
-## Misllaneous
+## Miscellaneous
 data_type=0, dataset/interhand.py syn=True, use renderih together with Interhand2.6M
 
 data_type=1, loader_ori using synthetic+real
