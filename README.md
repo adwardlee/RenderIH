@@ -1,5 +1,6 @@
 # RenderIH
 Official PyTorch implementation of "RenderIH: A large-scale synthetic dataset for 3D interacting hand pose estimation", ICCV 2023
+[Project website](https://adwardlee.github.io/view_renderih/)
 
 ## Our dataset
 [RenderIH](./rendering_code): Download from Google Drive: [imgs](https://drive.google.com/file/d/1nl5VZvnKN3SIJnBOis4rfsuG_DT0smLl/view?usp=drive_link), [annotations](https://drive.google.com/file/d/1wOuZTgWODhyelLXJr7Kv9tuEiFxcWIif/view?usp=drive_link), [materials](https://drive.google.com/file/d/1NQJvLTuY2hKYfhMBqG-OADrosDGMuPzr/view?usp=drive_link); or BaiduPan: [imgs](https://pan.baidu.com/s/1M0vxWRbBu1lH_fV9FPBHbg?pwd=mo5n) [annotations](https://pan.baidu.com/s/1XFIbU_QHT1Smi2WL_LmCJw?pwd=ajbf). Untar the compressed files of **imgs** and **annotations**, then run [step7](https://github.com/adwardlee/RenderIH/blob/main/rendering_code/step7_gen_annotations.py) in rendering_code. **Materials** is used for generation process in previous steps in rendering.
@@ -73,7 +74,7 @@ change `INTERHAND_PATH` in `utils/default.yaml` to the dataset path
 change `MODEL_PATH` to the pretrained model path, and `INTERHAND2.6M_PATH` to dataset path.
 
 
-## Misllaneous
+## Miscellaneous
 data_type=0, dataset/interhand.py syn=True, use renderih together with Interhand2.6M
 
 data_type=1, loader_ori using synthetic+real
