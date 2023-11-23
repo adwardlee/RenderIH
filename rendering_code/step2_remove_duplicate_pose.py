@@ -179,21 +179,10 @@ def generate_obj(annot, filename,mano_right,mano_left, cur_idx, save_annot, mesh
 mano_left=mano1(mano_root='mano',center_idx=None,use_pca=False,flat_hand_mean=False, side='left')
 mano_right=mano1(mano_root='mano',center_idx=None,use_pca=False,flat_hand_mean=False, side='right')
 mano_left.th_shapedirs[:,0,:] *= -1
-# mano_left=ManoLayer(manoPath='mano/MANO_LEFT.pkl',center_idx=None,use_pca=True)
-# mano_right=ManoLayer(manoPath='mano/MANO_RIGHT.pkl',center_idx=None,use_pca=True)
-# mano_left.shapedirs[:,0,:] *= -1
-# generate_obj(250091,mano_right,mano_left)
 n=0
-path = '/mnt/workspace/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/interpolate_pose/'
-# mesh_path = '/mnt/workspace/workgroup/lijun/hand_dataset/xinchuan_4895mesh/'
-# ori_annot = '/mnt/workspace/dataset/interhand_5fps/interhand_data/train/single_pose/'
-# save_annot = '/mnt/workspace/dataset/interhand_5fps/interhand_data/train/xinchuan_4895annot/'
-# mesh_path = '/mnt/workspace/workgroup/lijun/hand_dataset/xinchuan_200wmesh/'
-# ori_annot = '/mnt/workspace/dataset/interhand_5fps/interhand_data/train/single_pose/'
-# save_annot = '/mnt/workspace/dataset/interhand_5fps/interhand_data/train/xinchuan_200w/oriannot/'
-mesh_path = '/mnt/workspace/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/camera_pose_test/'
-ori_annot = '/mnt/workspace/dataset/interhand_5fps/interhand_data/train/single_pose/'
-save_annot = '/mnt/workspace/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/oriannot_test/'
+path = '/folder/to/pkl/'
+mesh_path = '/folder/to/obj/'
+save_annot = '/save/folder/'
 if not os.path.exists(mesh_path):
     os.makedirs(mesh_path)
 if not os.path.exists(save_annot):
@@ -202,7 +191,6 @@ files=os.listdir(path)
 files.sort()
 print(' length file ', len(files), flush=True)### 68737
 start = 366358 + 8000 * 0#### 0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100###  change ### 366358， 649493
-# start = 1015851 + 8000 * 180#### 0, 15, 30, 45, , 60, 75, 90, 105, 120, 135, 150, 165, 180### 100000 change ### 366358， 649493
 input_idx = 8000 * 0################## 0, 8000, 16000, 3x8_10e3,4x8_10e3, 5x8_10e3, 6x8_10e3, 7x8_10e3, 8x8_10e3, 9x8,10e3,10x8_10e3,11x8_10e3
 ################################# 12x8_10e3,
 print('start idx', start, flush=True)

@@ -13,7 +13,8 @@ import os
 
 def add_hand(idx,hand_type,imgpath):
 
-    file_loc = f'/mnt/workspace/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/nodup_pose/{idx}_{hand_type}.obj'
+    # file_loc = f'/mnt/workspace/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/nodup_pose/{idx}_{hand_type}.obj'
+    file_loc = f'/nvme/lijun/dataset/renderih/nodup_sample/{idx}_{hand_type}.obj'
     imported_object = bpy.ops.import_scene.obj(filepath=file_loc)
     obj_object = bpy.context.selected_objects[0] ####<--Fix
     #print('Imported name: ', obj_object.name)
@@ -49,7 +50,7 @@ def add_hand(idx,hand_type,imgpath):
     mat.node_tree.links.new(tex_node.outputs[0], principled_BSDF.inputs[0])
 
 
-def world():
+def world(world_path):
     C = bpy.context
     scn = C.scene
 
@@ -66,9 +67,6 @@ def world():
     # Add Environment Texture node
     node_environment = tree_nodes.new('ShaderNodeTexEnvironment')
     # Load and assign the image to the node property
-
-    world_path='/mnt/workspace/dataset/yunqian_blend/HDRI/'
-
 
 
     world_list=os.listdir(world_path)
@@ -237,10 +235,12 @@ if __name__ == "__main__":
 #load pickle data
     idx=int(sys.argv[12])
 
-    with open(f'/mnt/workspace/workgroup/lijun/hand_dataset/synthesis/sdf_xinchuan/nodup_annot/{idx}.pkl', 'rb') as f:
-    #with open(f'/mnt/workspace/dataset/interhand_5fps/interhand_data/train/xinchuan_200w/oriannot/{idx}.pkl', 'rb') as f:
-    #with open(f'/mnt/workspace/dataset/interhand_5fps/interhand_data/train/xinchuan_4895annot1/{idx}.pkl', 'rb') as f:
+    texture_path='/path/to/texture/' 
+    world_path='/path/to/HDRI/'
+    with open(f'/path/to/pkl/', 'rb') as f:
+    #with open(f'/nvme/lijun/dataset/renderih/nodup_sample/{idx}.pkl', 'rb') as f:
         data = pickle.load(f)
+        
     R_world2cv=Matrix(data['camera']['R'])
     T_world2cv=Vector(data['camera']['t'][0])
     K=Matrix(data['camera']['camera'])
@@ -264,21 +264,20 @@ if __name__ == "__main__":
     #add hand
     # color=random.randint(0,1)
 
-    texture_path='./texture/'
+    # texture_path='/home/lilijun/nvme/dataset/renderih/texture/'
 
     texture_list=os.listdir(texture_path)
     rand=random.randint(0,len(texture_list)-1) ### change llj ###
 
     imgpath=f'{texture_path}{texture_list[rand]}'
 
-    # imgpath='/mnt/workspace/render_hand/interhand_tex.png'
 
     add_hand(idx,'left',imgpath)
     add_hand(idx,'right',imgpath)
     #print('color:',imgpath)
 
     #add environment texture
-    world()
+    world(world_path=world_path)
 
     # render settings
     bpy.context.scene.render.engine = 'CYCLES'
