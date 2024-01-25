@@ -1,0 +1,1 @@
+# please refer the batch_optimize_mocap_origin.py
